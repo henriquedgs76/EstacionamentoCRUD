@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EstacionamentoCRUD", "EstacionamentoCRUD\EstacionamentoCRUD.csproj", "{D58589F9-D1E3-4548-B6E2-6C6EBCD7CE32}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pages", "Pages", "{AA1736C7-CE29-4670-A0B8-CB9A47C5A00F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D58589F9-D1E3-4548-B6E2-6C6EBCD7CE32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D58589F9-D1E3-4548-B6E2-6C6EBCD7CE32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D58589F9-D1E3-4548-B6E2-6C6EBCD7CE32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D58589F9-D1E3-4548-B6E2-6C6EBCD7CE32}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A76F543F-6333-4EDD-A322-A227359A69A6}
+	EndGlobalSection
+EndGlobal
