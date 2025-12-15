@@ -80,6 +80,14 @@ namespace EstacionamentoCRUD
                 }
 
                 TimeSpan tempoPermanencia = saida - entradaCompleta;
+
+                if (tempoPermanencia.TotalMinutes <= 15)
+                {
+                    txtValorPago.Text = "0,00";
+                    lblMensagem.Text = " Permanência até 15 minutos — Não cobrar tarifa";
+                    lblMensagem.CssClass = "text-success";
+                    return;
+                }
                 int horas = (int)Math.Ceiling(tempoPermanencia.TotalHours);
                 if (horas < 1) horas = 1;
 
