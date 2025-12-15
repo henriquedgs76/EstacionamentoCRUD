@@ -10,7 +10,7 @@ namespace Estacionamento
         {
             string placa = txtPlaca.Text.Trim();
 
-            // 🔎 Verifica se a placa já existe
+            //  Verifica se a placa já existe
             var checkParams = new[] { new SqlParameter("@Placa", placa) };
             int existe = Convert.ToInt32(DataAccess.ExecuteScalar("SELECT COUNT(*) FROM Veiculos WHERE Placa = @Placa AND Status = 'Estacionado'", checkParams));
 
@@ -21,14 +21,14 @@ namespace Estacionamento
                 return;
             }
 
-            // ✅ Inserção com hora no formato correto (TimeSpan)
+            // Inserção com hora no formato correto (TimeSpan)
             var insertParams = new[]
             {
                 new SqlParameter("@Placa", placa),
                 new SqlParameter("@Modelo", txtModelo.Text.Trim()),
                 new SqlParameter("@Cor", txtCor.Text.Trim()),
                 new SqlParameter("@DataEntrada", DateTime.Now.Date),
-                new SqlParameter("@HoraEntrada", DateTime.Now.TimeOfDay),
+                new SqlParameter("@HoraEntrada", DateTime.Now),
                 new SqlParameter("@Status", "Estacionado")
             };
 

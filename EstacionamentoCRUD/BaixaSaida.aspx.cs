@@ -34,7 +34,7 @@ namespace EstacionamentoCRUD
                 string placa = placaObj.ToString();
                 txtPlaca.Text = placa;
                 txtPlaca.ReadOnly = true;
-                // Automatically calculate the price
+                // aqui calcula o valor no automatico
                 CalcularValor(placa);
             }
             else
@@ -73,7 +73,7 @@ namespace EstacionamentoCRUD
 
                 if (saida < entradaCompleta)
                 {
-                    lblMensagem.Text = "⚠️ Data/hora de entrada é maior que a de saída. Verifique o registro.";
+                    lblMensagem.Text = " Data/hora de entrada é maior que a de saída. Verifique o registro.";
                     lblMensagem.CssClass = "text-warning";
                     txtValorPago.Text = "0,00";
                     return;
@@ -83,7 +83,7 @@ namespace EstacionamentoCRUD
                 double horas = Math.Ceiling(tempoPermanencia.TotalHours);
                 if (horas < 1) horas = 1;
 
-                double valor = horas * 5.0; // Assuming 5.0 is the hourly rate
+                double valor = horas * 5.0; 
 
                 txtValorPago.Text = valor.ToString("F2", CultureInfo.GetCultureInfo("pt-BR"));
                 lblMensagem.Text = $"🕒 Permanência: {horas:F0} hora(s)";

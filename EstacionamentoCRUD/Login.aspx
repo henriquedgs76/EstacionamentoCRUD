@@ -11,7 +11,7 @@
 <body class="bg-light d-flex justify-content-center align-items-center vh-100">
 
     <form id="form1" runat="server" class="card shadow-lg p-4" style="width: 400px;">
-        <h2 class="text-center text-primary mb-4">🚗 Sistema de Estacionamento</h2>
+        <h2 class="text-center text-primary mb-4"> Sistema de Estacionamento</h2>
 
         <div class="mb-3">
             <label for="txtUsuario" class="form-label">Usuário:</label>
