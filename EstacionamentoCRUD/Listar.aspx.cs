@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data;
-using System.Data.SqlClient;
 using EstacionamentoCRUD.DAL;
 
 namespace EstacionamentoCRUD.Pages
@@ -11,14 +10,8 @@ namespace EstacionamentoCRUD.Pages
         {
             if (!IsPostBack)
             {
-                using (SqlConnection con = Conexao.Conectar())
-                {
-                    SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Veiculos", con);
-                    DataTable dt = new DataTable();
-                    da.Fill(dt);
-                    GridView1.DataSource = dt;
-                    GridView1.DataBind();
-                }
+                GridView1.DataSource = DataAccess.ExecuteDataTable("SELECT * FROM Veiculos ORDER BY DataEntrada DESC, HoraEntrada DESC", null);
+                GridView1.DataBind();
             }
         }
     }

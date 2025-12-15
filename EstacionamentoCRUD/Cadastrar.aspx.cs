@@ -1,52 +1,48 @@
-﻿using System;
+using System;
 using System.Data.SqlClient;
+using EstacionamentoCRUD.DAL;
 
 namespace Estacionamento
 {
     public partial class Cadastrar : System.Web.UI.Page
     {
-        string conexao = "Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=EstacionamentoDB;Data Source=DESKTOP-GLQ18K5";
-
         protected void btnSalvar_Click(object sender, EventArgs e)
         {
-            using (SqlConnection con = new SqlConnection(conexao))
+            string placa = txtPlaca.Text.Trim();
+
+            // 🔎 Verifica se a placa já existe
+            var checkParams = new[] { new SqlParameter("@Placa", placa) };
+            int existe = Convert.ToInt32(DataAccess.ExecuteScalar("SELECT COUNT(*) FROM Veiculos WHERE Placa = @Placa AND Status = 'Estacionado'", checkParams));
+
+            if (existe > 0)
             {
-                con.Open();
-
-                // 🔎 Verifica se a placa já existe
-                SqlCommand checkCmd = new SqlCommand("SELECT COUNT(*) FROM Veiculos WHERE Placa = @Placa", con);
-                checkCmd.Parameters.AddWithValue("@Placa", txtPlaca.Text.Trim());
-                int existe = (int)checkCmd.ExecuteScalar();
-
-                if (existe > 0)
-                {
-                    lblMensagem.Text = "❌ Já existe um veículo com essa placa!";
-                    lblMensagem.CssClass = "text-danger";
-                    return;
-                }
-
-                // ✅ Inserção com hora no formato correto (TimeSpan)
-                SqlCommand cmd = new SqlCommand(@"
-                    INSERT INTO Veiculos (Placa, Modelo, Cor, DataEntrada, HoraEntrada, Status)
-                    VALUES (@Placa, @Modelo, @Cor, @DataEntrada, @HoraEntrada, @Status)", con);
-
-                cmd.Parameters.AddWithValue("@Placa", txtPlaca.Text.Trim());
-                cmd.Parameters.AddWithValue("@Modelo", txtModelo.Text.Trim());
-                cmd.Parameters.AddWithValue("@Cor", txtCor.Text.Trim());
-
-                // Data e hora separadas corretamente
-                cmd.Parameters.AddWithValue("@DataEntrada", DateTime.Now.Date);
-                cmd.Parameters.AddWithValue("@HoraEntrada", DateTime.Now.ToString("HH:mm:ss")); // <- formato certo pro tipo TIME
-                cmd.Parameters.AddWithValue("@Status", "Estacionado");
-
-                cmd.ExecuteNonQuery();
-
-                lblMensagem.Text = "✅ Veículo cadastrado com sucesso!";
-                lblMensagem.CssClass = "text-success";
-
-                // Redireciona pra página inicial
-                Response.Redirect("Home.aspx");
+                lblMensagem.Text = "❌ Já existe um veículo estacionado com essa placa!";
+                lblMensagem.CssClass = "text-danger";
+                return;
             }
+
+            // ✅ Inserção com hora no formato correto (TimeSpan)
+            var insertParams = new[]
+            {
+                new SqlParameter("@Placa", placa),
+                new SqlParameter("@Modelo", txtModelo.Text.Trim()),
+                new SqlParameter("@Cor", txtCor.Text.Trim()),
+                new SqlParameter("@DataEntrada", DateTime.Now.Date),
+                new SqlParameter("@HoraEntrada", DateTime.Now.TimeOfDay),
+                new SqlParameter("@Status", "Estacionado")
+            };
+
+            string sql = @"
+                INSERT INTO Veiculos (Placa, Modelo, Cor, DataEntrada, HoraEntrada, Status)
+                VALUES (@Placa, @Modelo, @Cor, @DataEntrada, @HoraEntrada, @Status)";
+
+            DataAccess.ExecuteNonQuery(sql, insertParams);
+
+            lblMensagem.Text = "✅ Veículo cadastrado com sucesso!";
+            lblMensagem.CssClass = "text-success";
+
+            // Redireciona pra página inicial após 2 segundos
+            Response.AddHeader("REFRESH", "2;URL=Home.aspx");
         }
     }
 }

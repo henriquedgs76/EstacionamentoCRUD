@@ -1,31 +1,26 @@
 ﻿using System;
 using System.Data;
-using System.Data.SqlClient;
 using System.Web.UI;
+using EstacionamentoCRUD.DAL;
 
 namespace Estacionamento
 {
     public partial class Home : Page
     {
-        string conexao = "Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=EstacionamentoDB;Data Source=DESKTOP-GLQ18K5";
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
+            {
                 CarregarVeiculos();
+            }
         }
 
         private void CarregarVeiculos()
         {
-            using (SqlConnection con = new SqlConnection(conexao))
-            {
-                string sql = "SELECT Id, Placa, Modelo, Cor, DataEntrada, HoraEntrada, DataSaida, ValorPago, Status FROM Veiculos";
-                SqlDataAdapter da = new SqlDataAdapter(sql, con);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-                gvVeiculos.DataSource = dt;
-                gvVeiculos.DataBind();
-            }
+            // Order by status to show active ones first, then by entry date
+            string sql = "SELECT * FROM Veiculos ORDER BY CASE WHEN Status = 'Estacionado' THEN 0 ELSE 1 END, DataEntrada DESC, HoraEntrada DESC";
+            gvVeiculos.DataSource = DataAccess.ExecuteDataTable(sql, null);
+            gvVeiculos.DataBind();
         }
     }
 }
