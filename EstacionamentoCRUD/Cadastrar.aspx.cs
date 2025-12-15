@@ -27,7 +27,7 @@ namespace Estacionamento
                 new SqlParameter("@Placa", placa),
                 new SqlParameter("@Modelo", txtModelo.Text.Trim()),
                 new SqlParameter("@Cor", txtCor.Text.Trim()),
-                new SqlParameter("@DataEntrada", DateTime.Now.Date),
+                new SqlParameter("@DataEntrada", DateTime.Now),
                 new SqlParameter("@HoraEntrada", DateTime.Now),
                 new SqlParameter("@Status", "Estacionado")
             };

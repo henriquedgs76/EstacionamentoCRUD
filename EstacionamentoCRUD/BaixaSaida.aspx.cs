@@ -34,8 +34,8 @@ namespace EstacionamentoCRUD
                 string placa = placaObj.ToString();
                 txtPlaca.Text = placa;
                 txtPlaca.ReadOnly = true;
-                // aqui calcula o valor no automatico
-                CalcularValor(placa);
+                txtValorPago.Text = string.Empty;
+                lblMensagem.Text = string.Empty;
             }
             else
             {
@@ -80,10 +80,18 @@ namespace EstacionamentoCRUD
                 }
 
                 TimeSpan tempoPermanencia = saida - entradaCompleta;
-                double horas = Math.Ceiling(tempoPermanencia.TotalHours);
+                int horas = (int)Math.Ceiling(tempoPermanencia.TotalHours);
                 if (horas < 1) horas = 1;
 
-                double valor = horas * 5.0; 
+                decimal valor;
+                if (horas <= 2)
+                {
+                    valor = 18.00m;
+                }
+                else
+                {
+                    valor = 18.00m + ((horas - 2) * 5.00m);
+                }
 
                 txtValorPago.Text = valor.ToString("F2", CultureInfo.GetCultureInfo("pt-BR"));
                 lblMensagem.Text = $"🕒 Permanência: {horas:F0} hora(s)";
