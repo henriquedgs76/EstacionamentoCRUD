@@ -20,8 +20,13 @@ Desenvolvido em **ASP.NET Web Forms (C#)** com **SQL Server**, o sistema realiza
 ✅ Telas de **Login** e **Home** com autenticação simples  
 
 ## 💰 Regras de Cobrança
-🕐 Primeiras 2 horas = R$ 18,00
-🕐 Cada hora adicional (ou fração) = R$ 5,00
+
+⏱ Até 15 minutos = Gratuito
+
+🕐 Primeiras 2 horas = R$ 18,00 
+
+🕐 Cada hora adicional = R$ 5,00
+
 
 O cálculo é feito automaticamente no momento da baixa do veículo.
 
