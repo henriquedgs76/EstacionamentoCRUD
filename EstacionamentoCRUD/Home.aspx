@@ -2,6 +2,7 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <div class="d-flex justify-content-between align-items-center mb-3">
+        <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/darkly/bootstrap.min.css" rel="stylesheet" />
         <h3>Dashboard</h3>
         <a href="Cadastrar.aspx" class="btn btn-success">+ Novo Veículo</a>
     </div>
@@ -10,6 +11,7 @@
         <Columns>
             <asp:BoundField DataField="Placa" HeaderText="Placa" />
             <asp:BoundField DataField="Modelo" HeaderText="Modelo" />
+            <asp:BoundField DataField="NumeroDaVaga" HeaderText="Vaga" />
             <asp:BoundField DataField="Status" HeaderText="Status" />
             <asp:BoundField DataField="DataEntrada" HeaderText="Entrada" DataFormatString="{0:dd/MM/yyyy}" />
             <asp:BoundField DataField="HoraEntrada" HeaderText="Hora" />

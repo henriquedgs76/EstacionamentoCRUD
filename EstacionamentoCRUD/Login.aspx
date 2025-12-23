@@ -6,8 +6,7 @@
     <title>Login - Estacionamento</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-</head>
+<link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/darkly/bootstrap.min.css" rel="stylesheet" /></head>
 <body class="bg-light d-flex justify-content-center align-items-center vh-100">
 
     <form id="form1" runat="server" class="card shadow-lg p-4" style="width: 400px;">
@@ -24,12 +23,18 @@
         </div>
 
         <div class="d-grid mb-3">
-            <asp:Button ID="btnLogin" runat="server" CssClass="btn btn-primary btn-lg" Text="Entrar" OnClick="btnLogin_Click" />
+             <asp:Button ID="btnLogin" runat="server" CssClass="btn btn-primary btn-lg" Text="Entrar" OnClick="btnLogin_Click" />
+         </div>
+    
+         <asp:Label ID="lblMensagem" runat="server" CssClass="text-center fw-bold d-block mt-2"></asp:Label>
+    
+         <div class="text-center mt-3">
+            <a href="CadastrarUsuario.aspx">Não tem uma conta? Cadastre-se</a>
+            <span class="mx-2">|</span>
+            <a href="SolicitarRecuperacao.aspx">Esqueceu a senha?</a>
         </div>
-
-        <asp:Label ID="lblMensagem" runat="server" CssClass="text-center fw-bold d-block mt-2"></asp:Label>
-
-        <div class="text-center mt-3">
+   
+        <div class="text-center mt-2"> <!-- (Opcional: Mudei para mt-2 para ajustar o espaçamento) -->
             <small class="text-muted">© 2025 - Sistema Estacionamento</small>
         </div>
     </form>

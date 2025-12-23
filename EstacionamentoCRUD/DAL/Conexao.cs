@@ -11,7 +11,8 @@ namespace EstacionamentoCRUD.DAL
             return ConfigurationManager.ConnectionStrings["EstacionamentoDB"].ConnectionString;
         }
 
-        public static int ExecuteNonQuery(string commandText, SqlParameter[] parameters)
+        public static int ExecuteNonQuery(string commandText, 
+            SqlParameter[] parameters)
         {
             using (var connection = new SqlConnection(GetConnectionString()))
             {
@@ -27,7 +28,8 @@ namespace EstacionamentoCRUD.DAL
             }
         }
 
-        public static DataTable ExecuteDataTable(string commandText, SqlParameter[] parameters)
+        public static DataTable ExecuteDataTable(string commandText, 
+            SqlParameter[] parameters)
         {
             using (var connection = new SqlConnection(GetConnectionString()))
             {

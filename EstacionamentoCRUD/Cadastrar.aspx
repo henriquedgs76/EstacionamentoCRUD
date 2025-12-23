@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="Cadastrar Veículo" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Cadastrar.aspx.cs" Inherits="Estacionamento.Cadastrar" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+    <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/darkly/bootstrap.min.css" rel="stylesheet" />
     <div class="col-md-6 mx-auto">
         <div class="card shadow">
             <div class="card-header bg-success text-white text-center">
@@ -18,6 +19,10 @@
                 <div class="mb-3">
                     <label class="form-label">Cor</label>
                     <asp:TextBox ID="txtCor" runat="server" CssClass="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Vaga Disponível</label>
+                    <asp:DropDownList ID="ddlVagas" runat="server" CssClass="form-select" />
                 </div>
                 <asp:Label ID="lblMensagem" runat="server" />
                 <div class="text-center mt-3">

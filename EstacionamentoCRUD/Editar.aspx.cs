@@ -24,7 +24,9 @@ namespace EstacionamentoCRUD
 
         private void CarregarVeiculo(int id)
         {
-            string sql = "SELECT Placa, Modelo, Cor, DataEntrada, HoraEntrada FROM Veiculos WHERE Id = @Id";
+            string sql = "SELECT Placa, Modelo, Cor, DataEntrada, HoraEntrada " +
+                "FROM Veiculos " +
+                "WHERE Id = @Id";
             var parameters = new[] { new SqlParameter("@Id", id) };
             DataTable dt = DataAccess.ExecuteDataTable(sql, parameters);
 
@@ -36,7 +38,7 @@ namespace EstacionamentoCRUD
             }
             else
             {
-                lblMensagem.Text = "❌ Veículo não encontrado.";
+                lblMensagem.Text = " Veículo não encontrado.";
                 lblMensagem.CssClass = "text-danger";
             }
         }
@@ -48,7 +50,7 @@ namespace EstacionamentoCRUD
             txtCor.Text = dr["Cor"].ToString();
             txtDataEntrada.Text = Convert.ToDateTime(dr["DataEntrada"]).ToString("yyyy-MM-dd");
             txtHoraEntrada.Text = ((TimeSpan)dr["HoraEntrada"]).ToString(@"hh\:mm");
-            lblMensagem.Text = "✅ Veículo encontrado! Você pode editar os dados.";
+            lblMensagem.Text = " Veículo encontrado! Você pode editar os dados.";
             lblMensagem.CssClass = "text-success";
         }
 
@@ -58,12 +60,14 @@ namespace EstacionamentoCRUD
 
             if (string.IsNullOrEmpty(placa))
             {
-                lblMensagem.Text = "⚠️ Digite a placa do veículo.";
+                lblMensagem.Text = " Digite a placa do veículo.";
                 lblMensagem.CssClass = "text-warning";
                 return;
             }
 
-            string sql = "SELECT Placa, Modelo, Cor, DataEntrada, HoraEntrada FROM Veiculos WHERE Placa = @Placa";
+            string sql = "SELECT Placa, Modelo, Cor, DataEntrada, HoraEntrada " +
+                "FROM Veiculos " +
+                "WHERE Placa = @Placa";
             var parameters = new[] { new SqlParameter("@Placa", placa) };
             DataTable dt = DataAccess.ExecuteDataTable(sql, parameters);
 
@@ -73,7 +77,7 @@ namespace EstacionamentoCRUD
             }
             else
             {
-                lblMensagem.Text = "❌ Veículo não encontrado.";
+                lblMensagem.Text = " Veículo não encontrado.";
                 lblMensagem.CssClass = "text-danger";
             }
         }
@@ -86,7 +90,7 @@ namespace EstacionamentoCRUD
             
             if (string.IsNullOrEmpty(placa) || string.IsNullOrEmpty(modelo))
             {
-                lblMensagem.Text = "⚠️ Preencha todos os campos obrigatórios.";
+                lblMensagem.Text = " Preencha todos os campos obrigatórios.";
                 lblMensagem.CssClass = "text-warning";
                 return;
             }
@@ -94,7 +98,7 @@ namespace EstacionamentoCRUD
             TimeSpan horaEntrada;
             if (!TimeSpan.TryParse(txtHoraEntrada.Text, out horaEntrada))
             {
-                lblMensagem.Text = "⚠️ Formato de hora inválido. Use HH:mm.";
+                lblMensagem.Text = " Formato de hora inválido. Use HH:mm.";
                 lblMensagem.CssClass = "text-warning";
                 return;
             }
@@ -115,13 +119,13 @@ namespace EstacionamentoCRUD
             int rows = DataAccess.ExecuteNonQuery(sql, parameters);
             if (rows > 0)
             {
-                lblMensagem.Text = "✅ Alterações salvas com sucesso!";
+                lblMensagem.Text = " Alterações salvas com sucesso!";
                 lblMensagem.CssClass = "text-success";
                 Response.AddHeader("REFRESH", "2;URL=Home.aspx");
             }
             else
             {
-                lblMensagem.Text = "❌ Erro ao salvar alterações. Verifique a placa.";
+                lblMensagem.Text = " Erro ao salvar alterações. Verifique a placa.";
                 lblMensagem.CssClass = "text-danger";
             }
         }

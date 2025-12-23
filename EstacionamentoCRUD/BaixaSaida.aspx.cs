@@ -25,7 +25,10 @@ namespace EstacionamentoCRUD
 
         private void CarregarVeiculo(int id)
         {
-            string sql = "SELECT Placa FROM Veiculos WHERE Id = @Id AND Status = 'Estacionado'";
+            string sql = "SELECT Placa " +
+                "FROM Veiculos " +
+                "WHERE Id = @Id " +
+                "AND Status = 'Estacionado'";
             var parameters = new[] { new SqlParameter("@Id", id) };
             object placaObj = DataAccess.ExecuteScalar(sql, parameters);
 
@@ -39,7 +42,7 @@ namespace EstacionamentoCRUD
             }
             else
             {
-                lblMensagem.Text = "❌ Veículo não encontrado ou já deu baixa.";
+                lblMensagem.Text = " Veículo não encontrado ou já deu baixa.";
                 lblMensagem.CssClass = "text-danger";
             }
         }
@@ -49,7 +52,7 @@ namespace EstacionamentoCRUD
             string placa = txtPlaca.Text.Trim();
             if (string.IsNullOrEmpty(placa))
             {
-                lblMensagem.Text = "⚠️ Digite a placa do veículo.";
+                lblMensagem.Text = " Digite a placa do veículo.";
                 lblMensagem.CssClass = "text-warning";
                 return;
             }
@@ -58,7 +61,10 @@ namespace EstacionamentoCRUD
 
         private void CalcularValor(string placa)
         {
-            string sql = "SELECT DataEntrada, HoraEntrada FROM Veiculos WHERE Placa = @Placa AND Status = 'Estacionado'";
+            string sql = "SELECT DataEntrada, HoraEntrada " +
+                "FROM Veiculos " +
+                "WHERE Placa = @Placa " +
+                "AND Status = 'Estacionado'";
             var parameters = new[] { new SqlParameter("@Placa", placa) };
             DataTable dt = DataAccess.ExecuteDataTable(sql, parameters);
 
@@ -102,12 +108,12 @@ namespace EstacionamentoCRUD
                 }
 
                 txtValorPago.Text = valor.ToString("F2", CultureInfo.GetCultureInfo("pt-BR"));
-                lblMensagem.Text = $"🕒 Permanência: {horas:F0} hora(s)";
+                lblMensagem.Text = $" Permanência: {horas:F0} hora(s)";
                 lblMensagem.CssClass = "text-info";
             }
             else
             {
-                lblMensagem.Text = "❌ Veículo não encontrado ou já deu baixa.";
+                lblMensagem.Text = " Veículo não encontrado ou já deu baixa.";
                 lblMensagem.CssClass = "text-danger";
                 txtValorPago.Text = string.Empty;
             }
@@ -119,7 +125,7 @@ namespace EstacionamentoCRUD
 
             if (string.IsNullOrEmpty(placa))
             {
-                lblMensagem.Text = "⚠️ Digite a placa do veículo.";
+                lblMensagem.Text = " Digite a placa do veículo.";
                 lblMensagem.CssClass = "text-warning";
                 return;
             }
@@ -127,32 +133,57 @@ namespace EstacionamentoCRUD
             decimal valorPago;
             if (!decimal.TryParse(txtValorPago.Text.Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture, out valorPago))
             {
-                lblMensagem.Text = "⚠️ Valor inválido. Clique em Calcular primeiro.";
+                lblMensagem.Text = " Valor inválido. Clique em Calcular primeiro.";
                 lblMensagem.CssClass = "text-warning";
                 return;
             }
 
-            string sql = @"UPDATE Veiculos 
-                           SET DataSaida = GETDATE(), ValorPago = @ValorPago, Status = 'Finalizado'
-                           WHERE Placa = @Placa AND Status = 'Estacionado'";
-
-            var parameters = new[]
+            try
             {
-                new SqlParameter("@Placa", placa),
-                new SqlParameter("@ValorPago", valorPago)
-            };
+                // 1. Antes de tudo, descobrir qual vaga este veículo ocupa
+                object vagaIdObj = DataAccess.ExecuteScalar("SELECT VagaId FROM Veiculos " +
+                    "WHERE Placa = @Placa " +
+                    "AND Status = 'Estacionado'", new[] { new SqlParameter("@Placa", placa) });
 
-            int rows = DataAccess.ExecuteNonQuery(sql, parameters);
+                // 2. Atualiza o status do veículo para 'Finalizado'
+                string sqlUpdateVeiculo = @"UPDATE Veiculos 
+                                           SET DataSaida = GETDATE(), ValorPago = @ValorPago, 
+                                           Status = 'Finalizado'
+                                           WHERE Placa = @Placa AND Status = 'Estacionado'";
 
-            if (rows > 0)
-            {
-                lblMensagem.Text = "✅ Saída registrada com sucesso!";
-                lblMensagem.CssClass = "text-success";
-                Response.AddHeader("REFRESH", "2;URL=Home.aspx");
+                var veiculoParams = new[]
+                {
+                    new SqlParameter("@Placa", placa),
+                    new SqlParameter("@ValorPago", valorPago)
+                };
+
+                int rows = DataAccess.ExecuteNonQuery(sqlUpdateVeiculo, veiculoParams);
+
+                if (rows > 0)
+                {
+                    // 3. Se o veículo foi baixado com sucesso E ele tinha uma vaga, libera a vaga
+                    if (vagaIdObj != null && vagaIdObj != DBNull.Value)
+                    {
+                        int vagaId = Convert.ToInt32(vagaIdObj);
+                        string sqlUpdateVaga = "UPDATE Vagas " +
+                            "SET Status = 'Livre' " +
+                            "WHERE Id = @VagaId";
+                        DataAccess.ExecuteNonQuery(sqlUpdateVaga, new[] { new SqlParameter("@VagaId", vagaId) });
+                    }
+
+                    lblMensagem.Text = " Saída registrada com sucesso! A vaga agora está livre.";
+                    lblMensagem.CssClass = "text-success";
+                    Response.AddHeader("REFRESH", "2;URL=Home.aspx");
+                }
+                else
+                {
+                    lblMensagem.Text = " Erro: veículo não encontrado ou já finalizado.";
+                    lblMensagem.CssClass = "text-danger";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                lblMensagem.Text = "❌ Erro: veículo não encontrado ou já finalizado.";
+                lblMensagem.Text = " Ocorreu um erro inesperado ao dar baixa.";
                 lblMensagem.CssClass = "text-danger";
             }
         }

@@ -10,7 +10,17 @@ namespace EstacionamentoCRUD.Pages
         {
             if (!IsPostBack)
             {
-                GridView1.DataSource = DataAccess.ExecuteDataTable("SELECT * FROM Veiculos ORDER BY DataEntrada DESC, HoraEntrada DESC", null);
+                string sql = @"
+                    SELECT 
+                        V.*, 
+                        VG.NumeroDaVaga 
+                    FROM 
+                        Veiculos V
+                        LEFT JOIN Vagas VG ON V.VagaId = VG.Id
+                    ORDER BY 
+                        V.DataEntrada DESC, 
+                        V.HoraEntrada DESC";
+                GridView1.DataSource = DataAccess.ExecuteDataTable(sql, null);
                 GridView1.DataBind();
             }
         }

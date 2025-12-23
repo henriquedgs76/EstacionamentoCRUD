@@ -1,9 +1,10 @@
 ﻿<%@ Page Title="Editar Veículo" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Editar.aspx.cs" Inherits="EstacionamentoCRUD.Editar" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+    <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/darkly/bootstrap.min.css" rel="stylesheet" />
     <div class="col-md-8 mx-auto">
         <div class="card shadow p-4">
-            <h3 class="text-center mb-4 text-primary">✏️ Editar Veículo</h3>
+            <h3 class="text-center mb-4 text-primary">Editar Veículo</h3>
 
             <div class="row mb-3">
                 <div class="col-md-9">
@@ -11,7 +12,7 @@
                     <asp:TextBox ID="txtPlaca" runat="server" CssClass="form-control" MaxLength="8" />
                 </div>
                 <div class="col-md-3 d-flex align-items-end">
-                    <asp:Button ID="btnBuscar" runat="server" Text="🔍 Buscar" CssClass="btn btn-secondary w-100" OnClick="btnBuscar_Click" />
+                    <asp:Button ID="btnBuscar" runat="server" Text=" Buscar" CssClass="btn btn-secondary w-100" OnClick="btnBuscar_Click" />
                 </div>
             </div>
 
@@ -37,7 +38,7 @@
             </div>
 
             <div class="text-center">
-                <asp:Button ID="btnSalvar" runat="server" Text="💾 Salvar Alterações" CssClass="btn btn-primary" OnClick="btnSalvar_Click" />
+                <asp:Button ID="btnSalvar" runat="server" Text=" Salvar Alterações" CssClass="btn btn-primary" OnClick="btnSalvar_Click" />
                 <a href="Home.aspx" class="btn btn-outline-secondary ms-2">⬅ Voltar</a>
             </div>
 
