@@ -12,15 +12,15 @@ O **EstacionamentoMaster** é uma solução completa que transforma a complexida
 
 ### 🔐 Gestão de Acessos e Segurança
 Sistema robusto de autenticação com perfis de permissão (Admin, Supervisor e Operador). Garante que cada colaborador acesse apenas as funções necessárias para seu cargo.
-![Tela de Login](screenshots/login.png)
+![Tela de Login](screenshots/login.png.png)
 
 ### 📊 Business Intelligence & Retenção
 Dashboard gerencial com indicadores financeiros e de ocupação. O sistema possui um motor de busca ativa que identifica **clientes ausentes há mais de 15 dias**, gerando insights para campanhas de fidelização.
-![Dashboard](screenshots/dashboard.png)
+![Dashboard](screenshots/dashboard.png.png)
 
 ### 📸 Check-in por Reconhecimento de Placa (OCR)
 Otimização da entrada de veículos através da leitura automática de placas utilizando a câmera do dispositivo móvel. O sistema processa a imagem em tempo real, identifica os caracteres e realiza a busca automática no banco de dados para agilizar o atendimento de clientes recorrentes.
-![Leitura de Placa](screenshots/ocr_camera.png)
+![Leitura de Placa](screenshots/ocr_camera.png.jpeg))
 
 ---
 
