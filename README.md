@@ -10,8 +10,12 @@ O **EstacionamentoMaster** é uma solução completa que transforma a complexida
 
 ## 🖥️ O Produto em Operação
 
+
+---
+
 ### 🔐 Gestão de Acessos e Segurança
 Sistema robusto de autenticação com perfis de permissão (Admin, Supervisor e Operador). Garante que cada colaborador acesse apenas as funções necessárias para seu cargo.
+
 ![Tela de Login](screenshots/login.png)
 
 ### 📊 Business Intelligence & Retenção
@@ -20,6 +24,7 @@ Dashboard gerencial com indicadores financeiros e de ocupação. O sistema possu
 
 ### 📸 Check-in por Reconhecimento de Placa (OCR)
 Otimização da entrada de veículos através da leitura automática de placas utilizando a câmera do dispositivo móvel. O sistema processa a imagem em tempo real, identifica os caracteres e realiza a busca automática no banco de dados para agilizar o atendimento de clientes recorrentes.
+
 ![Leitura de Placa](screenshots/ocr_camera.jpeg))
 
 ---
@@ -56,7 +61,7 @@ O sistema foi construído seguindo o padrão de **Arquitetura em Camadas (N-Tier
 
 ## 👨‍💻 Sobre o Desenvolvedor
 
-**Douglas Henrique** *Desenvolvedor de Software focado em soluções para o mundo real.*
+**Douglas Henrique** *Desenvolvedor Backend focado em soluções para o mundo real.*
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/douglashenrique76/)
 [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/henriquedgs76)
