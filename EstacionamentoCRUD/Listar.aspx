@@ -10,14 +10,15 @@
             <Columns>
                 <asp:BoundField DataField="Id" HeaderText="ID" />
                 <asp:BoundField DataField="Placa" HeaderText="Placa" />
+                <asp:BoundField DataField="Marca" HeaderText="Marca" />
                 <asp:BoundField DataField="Modelo" HeaderText="Modelo" />
                 <asp:BoundField DataField="Cor" HeaderText="Cor" />
                 <asp:BoundField DataField="NumeroDaVaga" HeaderText="Vaga" />
                 <asp:BoundField DataField="DataEntrada" HeaderText="Entrada" DataFormatString="{0:dd/MM/yyyy}" />
                 <asp:BoundField DataField="HoraEntrada" HeaderText="Hora" />
-                <asp:HyperLinkField Text="✏️ Editar" DataNavigateUrlFields="Id" DataNavigateUrlFormatString="Editar.aspx?Id={0}"
+                <asp:HyperLinkField Text=" Editar" DataNavigateUrlFields="Id" DataNavigateUrlFormatString="Editar.aspx?Id={0}"
                     ControlStyle-CssClass="btn btn-sm btn-outline-primary" />
-                <asp:HyperLinkField Text="🗑️ Excluir" DataNavigateUrlFields="Id" DataNavigateUrlFormatString="Excluir.aspx?Id={0}"
+                <asp:HyperLinkField Text=" Excluir" DataNavigateUrlFields="Id" DataNavigateUrlFormatString="Excluir.aspx?Id={0}"
                     ControlStyle-CssClass="btn btn-sm btn-outline-danger" />
             </Columns>
         </asp:GridView>

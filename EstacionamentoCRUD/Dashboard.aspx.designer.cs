@@ -11,106 +11,106 @@ namespace EstacionamentoCRUD
 {
 
 
-    public partial class SiteMaster
+    public partial class Dashboard
     {
 
         /// <summary>
-        /// mainNavLinksPlaceholder control.
+        /// ddlPeriodo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder mainNavLinksPlaceholder;
+        protected global::System.Web.UI.WebControls.DropDownList ddlPeriodo;
 
         /// <summary>
-        /// navLinkHome control.
+        /// lblFaturamentoHoje control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl navLinkHome;
+        protected global::System.Web.UI.WebControls.Label lblFaturamentoHoje;
 
         /// <summary>
-        /// navLinkDashboard control.
+        /// lblVeiculosAtivos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl navLinkDashboard;
+        protected global::System.Web.UI.WebControls.Label lblVeiculosAtivos;
 
         /// <summary>
-        /// navLinkListar control.
+        /// lblTicketMedio control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl navLinkListar;
+        protected global::System.Web.UI.WebControls.Label lblTicketMedio;
 
         /// <summary>
-        /// navLinkCadastrar control.
+        /// lblEntradasHoje control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl navLinkCadastrar;
+        protected global::System.Web.UI.WebControls.Label lblEntradasHoje;
 
         /// <summary>
-        /// navLinkEditar control.
+        /// lblOcupacao control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl navLinkEditar;
+        protected global::System.Web.UI.WebControls.Label lblOcupacao;
 
         /// <summary>
-        /// navLinkRegistrarSaida control.
+        /// lblClientesAusentes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl navLinkRegistrarSaida;
+        protected global::System.Web.UI.WebControls.Label lblClientesAusentes;
 
         /// <summary>
-        /// navLinkRelatorios control.
+        /// btnVoltarHome control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl navLinkRelatorios;
+        protected global::System.Web.UI.WebControls.Button btnVoltarHome;
 
         /// <summary>
-        /// lblUsuarioLogado control.
+        /// hfFaturamento control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblUsuarioLogado;
+        protected global::System.Web.UI.WebControls.HiddenField hfFaturamento;
 
         /// <summary>
-        /// lnkSair control.
+        /// hfVeiculos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkSair;
+        protected global::System.Web.UI.WebControls.HiddenField hfVeiculos;
 
         /// <summary>
-        /// MainContent control.
+        /// hfStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder MainContent;
+        protected global::System.Web.UI.WebControls.HiddenField hfStatus;
     }
 }

@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SolicitarRecuperacao.aspx.cs" Inherits="EstacionamentoCRUD.SolicitarRecuperacao" ResponseEncoding="utf-8" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SolicitarRecuperacao.aspx.cs" Inherits="EstacionamentoCRUD.SolicitarRecuperacao" ResponseEncoding="utf-8" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -22,6 +22,14 @@
         </div>
 
         <asp:Label ID="lblMensagem" runat="server" CssClass="text-center fw-bold d-block mt-2"></asp:Label>
+
+        <!-- Painel para exibir o link de recuperação, inicialmente invisível -->
+        <asp:Panel ID="pnlLink" runat="server" Visible="false" CssClass="mt-3">
+            <p class="text-center text-danger fw-bold">
+                **AVISO DE SEGURANÇA:** Este link é exibido apenas para demonstração. 
+            </p>
+            <asp:HyperLink ID="hlRecuperacao" runat="server" CssClass="d-block text-center text-info fw-bold text-decoration-underline" Target="_blank"></asp:HyperLink>
+        </asp:Panel>
 
         <div class="text-center mt-3">
             <a href="Login.aspx">Voltar para o Login</a>

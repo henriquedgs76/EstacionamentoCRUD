@@ -11,62 +11,89 @@ namespace EstacionamentoCRUD
 {
 
 
-    public partial class CadastrarUsuario
+    public partial class Relatorios
     {
 
         /// <summary>
-        /// formCadastrar control.
+        /// txtDataDiario control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm formCadastrar;
+        protected global::System.Web.UI.WebControls.TextBox txtDataDiario;
 
         /// <summary>
-        /// txtUsuario control.
+        /// btnGerarDiario control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtUsuario;
+        protected global::System.Web.UI.WebControls.Button btnGerarDiario;
 
         /// <summary>
-        /// txtSenha control.
+        /// ddlMes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSenha;
+        protected global::System.Web.UI.WebControls.DropDownList ddlMes;
 
         /// <summary>
-        /// txtConfirmarSenha control.
+        /// ddlAno control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtConfirmarSenha;
+        protected global::System.Web.UI.WebControls.DropDownList ddlAno;
 
         /// <summary>
-        /// ddlNivelAcesso control.
+        /// btnGerarMensal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlNivelAcesso;
+        protected global::System.Web.UI.WebControls.Button btnGerarMensal;
 
         /// <summary>
-        /// btnCadastrar control.
+        /// divResultados control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCadastrar;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divResultados;
+
+        /// <summary>
+        /// btnExportarPdf control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnExportarPdf;
+
+        /// <summary>
+        /// lblTotalFaturamento control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotalFaturamento;
+
+        /// <summary>
+        /// gvRelatorio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvRelatorio;
 
         /// <summary>
         /// lblMensagem control.

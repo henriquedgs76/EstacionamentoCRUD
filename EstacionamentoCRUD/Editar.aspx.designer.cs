@@ -33,6 +33,15 @@ namespace EstacionamentoCRUD
         protected global::System.Web.UI.WebControls.Button btnBuscar;
 
         /// <summary>
+        /// ddlMarcas control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlMarcas;
+
+        /// <summary>
         /// txtModelo control.
         /// </summary>
         /// <remarks>
@@ -67,6 +76,15 @@ namespace EstacionamentoCRUD
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtHoraEntrada;
+
+        /// <summary>
+        /// hfVeiculoId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfVeiculoId;
 
         /// <summary>
         /// btnSalvar control.

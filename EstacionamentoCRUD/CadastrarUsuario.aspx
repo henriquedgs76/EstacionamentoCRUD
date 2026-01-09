@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="CadastrarUsuario.aspx.cs" Inherits="EstacionamentoCRUD.CadastrarUsuario" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="CadastrarUsuario.aspx.cs" Inherits="EstacionamentoCRUD.CadastrarUsuario" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -6,7 +6,8 @@
     <title>Cadastro de Usuário - Estacionamento</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/darkly/bootstrap.min.css" rel="stylesheet" /></head>
+    <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/darkly/bootstrap.min.css" rel="stylesheet" />
+</head>
 <body class="bg-light d-flex justify-content-center align-items-center vh-100">
 
     <form id="formCadastrar" runat="server" class="card shadow-lg p-4" style="width: 400px;">
@@ -21,16 +22,26 @@
             <label for="txtSenha" class="form-label">Senha:</label>
             <asp:TextBox ID="txtSenha" runat="server" TextMode="Password" CssClass="form-control" placeholder="Crie uma senha forte"></asp:TextBox>
         </div>
-        
+
         <div class="mb-3">
             <label for="txtConfirmarSenha" class="form-label">Confirmar Senha:</label>
             <asp:TextBox ID="txtConfirmarSenha" runat="server" TextMode="Password" CssClass="form-control" placeholder="Digite a senha novamente"></asp:TextBox>
         </div>
 
+        <div class="mb-3">
+            <label for="ddlNivelAcesso" class="form-label">Nível de Acesso:</label>
+            <asp:DropDownList ID="ddlNivelAcesso" runat="server">
+    <asp:ListItem Text="Administrador" Value="1" />
+    <asp:ListItem Text="Operador" Value="2" />
+    <asp:ListItem Text="Supervisor" Value="3" />
+</asp:DropDownList>
+
+
+        </div>
+
         <div class="d-grid mb-3">
             <asp:Button ID="btnCadastrar" runat="server" CssClass="btn btn-success btn-lg" Text="Cadastrar" OnClick="btnCadastrar_Click" />
         </div>
-
         <asp:Label ID="lblMensagem" runat="server" CssClass="text-center fw-bold d-block mt-2"></asp:Label>
 
         <div class="text-center mt-3">

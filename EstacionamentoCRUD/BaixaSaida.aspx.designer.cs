@@ -15,6 +15,24 @@ namespace EstacionamentoCRUD
     {
 
         /// <summary>
+        /// txtTicketId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtTicketId;
+
+        /// <summary>
+        /// btnBuscarTicket control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnBuscarTicket;
+
+        /// <summary>
         /// txtPlaca control.
         /// </summary>
         /// <remarks>
@@ -40,6 +58,24 @@ namespace EstacionamentoCRUD
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtValorPago;
+
+        /// <summary>
+        /// ddlFormaPagamento control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlFormaPagamento;
+
+        /// <summary>
+        /// txtValorRecebido control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtValorRecebido;
 
         /// <summary>
         /// btnDarBaixa control.

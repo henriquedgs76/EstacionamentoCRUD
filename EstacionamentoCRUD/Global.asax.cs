@@ -13,7 +13,7 @@ namespace EstacionamentoCRUD
     {
         void Application_Start(object sender, EventArgs e)
         {
-            // Código que é executado na inicialização do aplicativo
+            // Code that runs on application startup
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }

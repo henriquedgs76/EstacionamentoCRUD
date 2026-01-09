@@ -1,105 +1,180 @@
+﻿using EstacionamentoCRUD.DAL;
 using System;
 using System.Data;
 using System.Data.SqlClient;
-using EstacionamentoCRUD.DAL;
+using System.Security.Cryptography;
+using System.Text;
+using System.Web.UI.WebControls;
 
 namespace EstacionamentoCRUD
 {
     public partial class RedefinirSenha : System.Web.UI.Page
     {
-        string stringDeConexao = "Integrated Security=SSPI;" +
-            "Persist Security Info=False;" +
-            "Initial Catalog=EstacionamentoDB;" +
-            "Data Source=DESKTOP-GLQ18K5";
+        // armazena o UsuarioId temporariamente
+        // Isso garante que o ID do usuário seja mantido durante o postback
+        // e não dependa do token após a validação inicial.
+        private int _usuarioIdParaRedefinir;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                // Verifica se um token foi passado pela URL
-                if (!string.IsNullOrEmpty(Request.QueryString["token"]))
-                {
-                    string token = Request.QueryString["token"];
-                    txtToken.Text = token;
-                    txtToken.ReadOnly = true; // Trava o campo para evitar que o usuário o altere
-                }
+                //bloqueia o painel de redefinição por padrão até o token ser validado
+                pnlRedefinicao.Visible = false;
+                VerificarTokenNaUrl();
             }
         }
 
-        protected void btnSalvar_Click(object sender, EventArgs e)
+        private void VerificarTokenNaUrl()
         {
-            string token = txtToken.Text.Trim();
-            string novaSenha = txtNovaSenha.Text;
-            string confirmarNovaSenha = txtConfirmarNovaSenha.Text;
+            string token = Request.QueryString["token"];
 
-            // 1. Validações iniciais
-            if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(novaSenha))
+            if (string.IsNullOrEmpty(token))
             {
-                lblMensagem.Text = " Todos os campos são obrigatórios.";
-                lblMensagem.CssClass = "text-warning text-center";
+                ExibirMensagem("Link de redefinição inválido ou ausente.", "text-danger");
                 return;
             }
 
+            // cria o hash do token recebido da
+            // URL para comparar com o hash no banco.
+            string hashDoTokenRecebido = GerarHashSHA256(token);
+
+            //faz a busca no token no banco de dados
+            string sqlBuscaToken = @"
+                SELECT UsuarioId, DataExpiracao, Usado
+                FROM TokensRecuperacaoSenha
+                WHERE HashDoToken = @HashDoToken";
+
+            var parametrosBusca = new[] { new SqlParameter("@HashDoToken", hashDoTokenRecebido) };
+            DataTable dt = DataAccess.ExecuteDataTable(sqlBuscaToken, parametrosBusca);
+
+            if (dt.Rows.Count == 0)
+            {
+                ExibirMensagem("Token inválido ou não encontrado.", "text-danger");
+                return;
+            }
+
+            DataRow tokenData = dt.Rows[0];
+            DateTime dataExpiracao = Convert.ToDateTime(tokenData["DataExpiracao"]);
+            bool usado = Convert.ToBoolean(tokenData["Usado"]);
+            _usuarioIdParaRedefinir = Convert.ToInt32(tokenData["UsuarioId"]);
+
+            // valida o token
+            if (usado)
+            {
+                ExibirMensagem("Este link de redefinição já foi utilizado.", "text-danger");
+                return;
+            }
+            if (dataExpiracao < DateTime.Now)
+            {
+                ExibirMensagem("Este link de redefinição expirou.", "text-danger");
+                return;
+            }
+
+            //se o token é válido, exibe o painel de redefinição de senha
+            pnlRedefinicao.Visible = true;
+            lblMensagem.Text = "Token validado! Por favor, insira sua nova senha.";
+            lblMensagem.CssClass = "text-info text-center";
+
+            // salva o UsuarioId para uso no postback do botão "Redefinir"
+            ViewState["ResetUsuarioId"] = _usuarioIdParaRedefinir;
+        }
+
+        protected void btnRedefinir_Click(object sender, EventArgs e)
+        {
+            //aqui recupera o usuario
+            if (ViewState["ResetUsuarioId"] == null)
+            {
+                ExibirMensagem("Sessão de redefinição inválida. Por favor, solicite um novo link.", "text-danger");
+                return;
+            }
+            _usuarioIdParaRedefinir = Convert.ToInt32(ViewState["ResetUsuarioId"]);
+
+
+            string novaSenha = txtNovaSenha.Text;
+            string confirmarNovaSenha = txtConfirmarNovaSenha.Text;
+
+            // valida as senhas
+            if (string.IsNullOrEmpty(novaSenha) || string.IsNullOrEmpty(confirmarNovaSenha))
+            {
+                ExibirMensagem("A nova senha e a confirmação são obrigatórias.", "text-warning");
+                return;
+            }
             if (novaSenha != confirmarNovaSenha)
             {
-                lblMensagem.Text = " As novas senhas não conferem.";
-                lblMensagem.CssClass = "text-danger text-center";
+                ExibirMensagem("As novas senhas não conferem.", "text-danger");
+                return;
+            }
+            if (novaSenha.Length < 6) //aqui é a força da senha,
+                                      //menos de 6dig é proibido.
+            {
+                ExibirMensagem("A senha deve ter no mínimo 6 caracteres.", "text-warning");
                 return;
             }
 
             try
             {
-                using (SqlConnection conexao = new SqlConnection(stringDeConexao))
+                //criação de novo Hash e Salt para a senha
+                (byte[] hashNovaSenha, byte[] salNovaSenha) = PasswordHasher.HashPassword(novaSenha);
+
+                //atualiza a senha do usuário
+                string sqlAtualizaSenha = @"
+                    UPDATE Usuarios
+                    SET HashDaSenha = @HashNovaSenha, SalDaSenha = @SalNovaSenha
+                    WHERE Id = @Id";
+
+                var parametrosAtualizaSenha = new[]
                 {
-                    conexao.Open();
-                    int usuarioId = 0;
+                    new SqlParameter("@HashNovaSenha", hashNovaSenha),
+                    new SqlParameter("@SalNovaSenha", salNovaSenha),
+                    new SqlParameter("@Id", _usuarioIdParaRedefinir)
+                };
 
-                    // 2. Valida o token: verifica se ele existe e não está expirado
-                    string sqlValidaToken = "SELECT Id FROM Usuarios " +
-                        "WHERE TokenDeRecuperacao = @Token " +
-                        "AND ValidadeDoToken > GETDATE()";
-                    using (SqlCommand comandoValida = new SqlCommand(sqlValidaToken, conexao))
-                    {
-                        comandoValida.Parameters.AddWithValue("@Token", token);
-                        var resultado = comandoValida.ExecuteScalar(); // Retorna o Id ou null
+                DataAccess.ExecuteNonQuery(sqlAtualizaSenha, parametrosAtualizaSenha);
 
-                        if (resultado == null || resultado == DBNull.Value)
-                        {
-                            lblMensagem.Text = " Token inválido ou expirado.";
-                            lblMensagem.CssClass = "text-danger text-center";
-                            return;
-                        }
-                        usuarioId = Convert.ToInt32(resultado);
-                    }
+                // aqui invalida o token usado
+                string tokenHashDaUrl = GerarHashSHA256(Request.QueryString["token"]); // Pega o hash do token atual
+                string sqlInvalidaToken = @"
+                    UPDATE TokensRecuperacaoSenha
+                    SET Usado = 1
+                    WHERE HashDoToken = @HashDoToken";
 
-                    // 3. Se o token é válido, cria o hash da nova senha
-                    (byte[] hashNovaSenha, byte[] salNovaSenha) = PasswordHasher.HashPassword(novaSenha);
+                var parametrosInvalidaToken = new[]
+                {
+                    new SqlParameter("@HashDoToken", tokenHashDaUrl)
+                };
 
-                    // 4. Atualiza a senha e invalida o token para não ser usado novamente
-                    string sqlAtualizaSenha = @"UPDATE Usuarios 
-                                                SET HashDaSenha = @HashNovaSenha, 
-                                                    SalDaSenha = @SalNovaSenha, 
-                                                    TokenDeRecuperacao = NULL, 
-                                                    ValidadeDoToken = NULL
-                                                WHERE Id = @Id";
+                DataAccess.ExecuteNonQuery(sqlInvalidaToken, parametrosInvalidaToken);
 
-                    using (SqlCommand comandoAtualiza = new SqlCommand(sqlAtualizaSenha, conexao))
-                    {
-                        comandoAtualiza.Parameters.AddWithValue("@HashNovaSenha", hashNovaSenha);
-                        comandoAtualiza.Parameters.AddWithValue("@SalNovaSenha", salNovaSenha);
-                        comandoAtualiza.Parameters.AddWithValue("@Id", usuarioId);
-                        comandoAtualiza.ExecuteNonQuery();
-                    }
-                }
 
-                lblMensagem.Text = " Senha redefinida com sucesso! Você já pode fazer o login.";
-                lblMensagem.CssClass = "text-success text-center";
-                Response.AddHeader("REFRESH", "3;URL=Login.aspx");
+                ExibirMensagem("Senha redefinida com sucesso! Você já pode fazer o login.", "text-success");
+                Response.AddHeader("REFRESH", "1;URL=Login.aspx"); // Redireciona após 1 segundos
             }
-            catch (Exception erro)
+            catch (Exception)
             {
-                lblMensagem.Text = " Ocorreu um erro inesperado ao redefinir a senha.";
-                lblMensagem.CssClass = "text-danger text-center";
+                ExibirMensagem("Ocorreu um erro inesperado ao redefinir a senha. Tente novamente.", "text-danger");
+            }
+        }
+
+        private void ExibirMensagem(string mensagem, string cssClass)
+        {
+            lblMensagem.Text = mensagem;
+            lblMensagem.CssClass = cssClass + " text-center";
+            pnlRedefinicao.Visible = false; //painel de redefinição fica invisível em caso de erro
+        }
+
+        // cria um hash SHA256 para o token, usado para comparar com o hash no banco.
+        private string GerarHashSHA256(string input)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(input));
+                var builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+                return builder.ToString();
             }
         }
     }

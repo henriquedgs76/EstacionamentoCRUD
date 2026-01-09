@@ -17,6 +17,11 @@
             </div>
 
             <div class="mb-3">
+                <label class="form-label">Marca</label>
+                <asp:DropDownList ID="ddlMarcas" runat="server" CssClass="form-select" />
+            </div>
+
+            <div class="mb-3">
                 <label class="form-label">Modelo</label>
                 <asp:TextBox ID="txtModelo" runat="server" CssClass="form-control" />
             </div>
@@ -36,10 +41,10 @@
                     <asp:TextBox ID="txtHoraEntrada" runat="server" CssClass="form-control" TextMode="Time" />
                 </div>
             </div>
-
+            <asp:HiddenField ID="hfVeiculoId" runat="server" />
             <div class="text-center">
                 <asp:Button ID="btnSalvar" runat="server" Text=" Salvar Alterações" CssClass="btn btn-primary" OnClick="btnSalvar_Click" />
-                <a href="Home.aspx" class="btn btn-outline-secondary ms-2">⬅ Voltar</a>
+                <a href="Home.aspx" class="btn btn-outline-secondary ms-2"> Voltar</a>
             </div>
 
             <div class="mt-4 text-center">
